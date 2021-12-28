@@ -1,11 +1,11 @@
-## 在AKS上构建Kubeflow Machine Learning 平台
-###  **标准安装步骤**
+# 在AKS上构建Kubeflow Machine Learning 平台
+
 
 Kubeflow 社区官方提供了如何使用 kfctl 二进制文件在 Azure 上部署
 Kubeflow的指南。然而由于Azure Kubernetes Service对K8S版本的升级，
 使用该指南安装后，并不能成功运行Kuberflow,我们可以先按如下标准步骤进行安装，在下一个章节（修改配置）进行Bug修补和配置修改，确保可以成功部署Kuberflow。
 
-#### 先决条件
+## 先决条件
 
 -   Kubeflow 部署在AKS上，允许数据科学家对 CPU 和 GPU
     进行可扩展的访问，这些 CPU 和 GPU
@@ -31,18 +31,9 @@ Kubeflow的指南。然而由于Azure Kubernetes Service对K8S版本的升级，
 你不需要拥有适用于 AKS（Azure Kubernetes 服务）的现有 Azure
 资源组或群集。您可以在部署过程中创建集群。
 
-#### 了解部署过程
 
-部署过程由以下命令控制：
 
--   **build** -（可选）创建配置文件，定义部署中的各种资源。kfctl
-    build如果您想在运行之前编辑资源，您只需要运行kfctl apply。
-
--   **apply** - 创建或更新资源。
-
--   **delete** - 删除资源。
-
-#### 应用布局
+## 应用布局
 
 您的 Kubeflow 应用程序目录**\${KF_DIR}**包含以下文件和目录：
 
@@ -64,7 +55,7 @@ Kubeflow的指南。然而由于Azure Kubernetes Service对K8S版本的升级，
 
 如果您在运行这些脚本时遇到任何问题，请参阅[故障排除指南](https://www.kubeflow.org/docs/azure/troubleshooting-azure)以获取更多信息。
 
-### Azure 设置
+## Azure 设置
 
 #### 要从命令行界面登录 Azure，请运行以下命令
 ```
@@ -72,7 +63,7 @@ az login
 
 az account set \--subscription \<NAME OR ID OF SUBSCRIPTION>
 ```
-#### 新集群的初始集群设置
+#### Azure Kubernetes Service集群的初始创建和设置
 
 创建资源组：
 ```
@@ -84,7 +75,7 @@ az group create -n \<RESOURCE_GROUP_NAME> -l \<LOCATION>
 
 -   LOCATION=westus
 
-创建一个专门定义的集群：
+创建一个Azure Kubernetes Service的集群：
 ```
 az aks create -g \<RESOURCE_GROUP_NAME> -n \<NAME> -s \<AGENT_SIZE> -c
 <AGENT_COUNT> -l \<LOCATION> \--generate-ssh-keys
@@ -104,7 +95,7 @@ az aks create -g \<RESOURCE_GROUP_NAME> -n \<NAME> -s \<AGENT_SIZE> -c
 驱动程序](https://docs.microsoft.com/azure/aks/gpu-cluster#install-nvidia-drivers)，然后才能将
 GPU 与 Kubeflow 一起使用。
 
-#### Kubeflow 安装
+## Kubeflow 安装
 
 **重要提示**：要使用多用户身份验证和命名空间分离在 Azure 上部署
 Kubeflow，请使用[Azure 中使用
@@ -137,30 +128,32 @@ kfctl。WSL的设置请参考官方[说明](https://docs.microsoft.com/en-us/win
 
 6.  在目录名称中仅使用字母数字字符或 -
 ```
-7.  export PATH=\$PATH:\"\<path-to-kfctl>\"
+   export PATH=\$PATH:\"\<path-to-kfctl>\"
 ```
   
-1. 将 KF_NAME 设置为您的 Kubeflow 部署的名称。 
+7. 将 KF_NAME 设置为您的 Kubeflow 部署的名称。 
 ```
     export KF_NAME=\<your choice of name for the Kubeflow deployment>
 ```
 
-1.  设置要存储一个或多个的基本目录的路径
 
-2.  Kubeflow 部署。 例如，/opt/。 然后为此部署设置 Kubeflow 应用程序目录。
+8.  Kubeflow 目录设置。 例如，/opt/。 然后为此部署设置 Kubeflow 应用程序目录。
 ```
  export BASE_DIR=\<path to a base directory>
 
-  export KF_DIR=\${BASE_DIR}/\${KF_NAME}
+ export KF_DIR=\${BASE_DIR}/\${KF_NAME}
 
 ```
 
-
-Set the configuration file to use when deploying Kubeflow.The following configuration installs Istio by default. Comment out the Istio components in the config file to skip Istio installation.See https://github.com/kubeflow/kubeflow/pull/3663
+9. 设置Kubeflow 部署所使用的Yaml模版
 
 ```
 export CONFIG_URI=\"https://raw.githubusercontent.com/kubeflow/manifests/v1.2-branch/kfdef/kfctl_k8s_istio.v1.2.0.yaml\"
-  
+ ```
+10. 运行kfctl在AKS上部署kubeflow
+
+ ```
+
 mkdir -p \${KF_DIR}
 
 cd \${KF_DIR}
@@ -168,7 +161,7 @@ cd \${KF_DIR}
 kfctl apply -V -f \${CONFIG_URI}
 
 ```
-5.  -   **\${KF_NAME}** - 您的 Kubeflow
+  -   **\${KF_NAME}** - 您的 Kubeflow
         部署的名称。如果您需要自定义部署名称，请在此处指定该名称。例如，my-kubeflow或kf-test。KF_NAME
         的值必须由小写字母数字字符或"-"组成，并且必须以字母数字字符开头和结尾。此变量的值不能超过
         25 个字符。它必须只包含一个名称，而不是目录路径。在创建存储
@@ -183,13 +176,13 @@ kfctl apply -V -f \${CONFIG_URI}
         applyor kfctl build（参见下一步）时，kfctl 会创建配置 YAML
         文件的本地版本，您可以在必要时进一步自定义。
 
-6.  运行此命令以检查资源是否已在命名空间中正确部署kubeflow：
+11.  运行此命令以检查资源是否已在命名空间中正确部署kubeflow：
 
 ```
 kubectl get all -n kubeflow
 
 ```
-8.  打开 Kubeflow 仪表板
+12.  打开 Kubeflow 仪表板
 
 > 默认安装不会创建外部端点，但您可以使用端口转发来访问您的集群。运行以下命令：
 >
@@ -202,13 +195,13 @@ kubectl get all -n kubeflow
 > 部署的访问控制中](https://www.kubeflow.org/docs/azure/authentication)阅读有关
 > Azure 身份验证选项的更多信息。
 
-###  **修改配置**
+##  **修改配置**
 
 > **由于AKS从1.19开始默使用containerd作为K8S集群认runtime（开始弃用
 > Docker
 > Runtime），由于这种runtime变化及其他升级变化，致使kubeflow安装后产生了兼容性问题。**
 
-1)  默认安装不会创建外部端点，想从外部长期访问Kubeflow Cental
+1.  默认安装不会创建外部端点，想从外部长期访问Kubeflow Cental
     Dashboard需要给它配置一个K8S **Service，**
 ```
 // serviceforistio-ingressgateway.yaml
@@ -245,7 +238,7 @@ Dashboard
 ![图形用户界面, 应用程序
 描述已自动生成](media/image3.png)
 
-2)  **MPI Operator 可以轻松地在 Kubernetes 上运行 allreduce
+2.  **MPI Operator 可以轻松地在 Kubernetes 上运行 allreduce
     风格的分布式训练。。默认安装kubeflow后发现MPI operator
     服务的Pod是失败的，解决方法是单独重新安装。**
 ```
@@ -257,9 +250,9 @@ kubectl apply -f deploy/v2beta1/mpi-operator.yaml
 
 kubectl apply -k manifests/overlays/Kubeflow
 ```
-3)  **解决Kubeflow Dashboard无法显示Pipeline 功能tab**
+3.  **解决Kubeflow Dashboard无法显示Pipeline 功能tab**
 ```
-kubectl edit destinationrule -n kubeflow ml-pipeline**
+kubectl edit destinationrule -n kubeflow ml-pipeline
 ```
 **将 tls.mode（最后一行）从 ISTIO_MUTUAL 修改为 DISABLE**
 ```
@@ -267,7 +260,7 @@ kubectl edit destinationrule -n kubeflow ml-pipeline-ui
 ```
 **将 tls.mode（最后一行）从 ISTIO_MUTUAL 修改为 DISABLE**
 
-4)  **解决无法运行Kubeflow Pipeline问题**
+4.  **解决无法运行Kubeflow Pipeline问题**
 
  **由于AKS1.19之后版本将容器
 Runtime从Docker换成了containerd，从而带来Kubeflow兼容问题，按如下方法修改workflow-controller-configmap的配置：**
@@ -276,7 +269,7 @@ kubectl edit configmap workflow-controller-configmap -n kubeflow
 ```
 **containerRuntimeExecutor: pns**
 
-###  **测试及演示**
+##  **测试及演示**
 
 
 1)  **在Kubeflow Dashboard上使用 Jupyter notebook运行机器学习训练**
@@ -404,7 +397,7 @@ print("Accuracy: ", sess.run(accuracy, feed_dict={x: mnist.test.images, y_: mnis
 > ![图形用户界面
 > 描述已自动生成](media/image18.png)
 
-###  总结
+##  总结
 
 > Kubeflow 是一个由众多子项目组成的开源产品，它的愿景很简单：在
 > Kubernetes 上运行机器学习工作负载。目前，Kubeflow 主要的组件有

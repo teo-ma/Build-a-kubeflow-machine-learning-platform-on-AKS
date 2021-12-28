@@ -1,6 +1,6 @@
-**在AKS上构建Kubeflow Machine Learning 平台**
+## **在AKS上构建Kubeflow Machine Learning 平台**
 
-1.  **Kubeflow背景**
+###  **Kubeflow背景**
 
 "Kubernetes 可以通过容器编排pipeline来应对许多计算挑战。它可以成为
 IT的单一平台，以可扩展且安全的方式提供统一的部署软件方式。从它诞生后，Machine
@@ -117,13 +117,13 @@ ML
 
     -   监控模型的性能，并将结果提供给您的流程以调整或重新训练模型。
 
-1.  **标准安装步骤**
+###  **标准安装步骤**
 
 Kubeflow 社区官方提供了如何使用 kfctl 二进制文件在 Azure 上部署
 Kubeflow的指南。然而由于Azure Kubernetes Service对K8S版本的升级，
 使用该指南安装后，并不能成功运行Kuberflow,我们可以先按如下标准步骤进行安装，在下一个章节（修改配置）进行Bug修补和配置修改，确保可以成功部署Kuberflow。
 
-## 先决条件
+#### 先决条件
 
 -   Kubeflow 部署在AKS上，允许数据科学家对 CPU 和 GPU
     进行可扩展的访问，这些 CPU 和 GPU
@@ -149,7 +149,7 @@ Kubeflow的指南。然而由于Azure Kubernetes Service对K8S版本的升级，
 你不需要拥有适用于 AKS（Azure Kubernetes 服务）的现有 Azure
 资源组或群集。您可以在部署过程中创建集群。
 
-## 了解部署过程
+#### 了解部署过程
 
 部署过程由以下命令控制：
 
@@ -160,11 +160,11 @@ Kubeflow的指南。然而由于Azure Kubernetes Service对K8S版本的升级，
 
 -   **delete** - 删除资源。
 
-### 应用布局
+#### 应用布局
 
 您的 Kubeflow 应用程序目录**\${KF_DIR}**包含以下文件和目录：
 
--   **\${CONFIG_FILE}**是一个 YAML 文件，用于定义与您的 Kubeflow
+-   **${CONFIG_FILE}**是一个 YAML 文件，用于定义与您的 Kubeflow
     部署相关的配置。
 
     -   此文件是您在部署 Kubeflow 时使用的基于 GitHub 的配置 YAML
@@ -182,20 +182,20 @@ Kubeflow的指南。然而由于Azure Kubernetes Service对K8S版本的升级，
 
 如果您在运行这些脚本时遇到任何问题，请参阅[故障排除指南](https://www.kubeflow.org/docs/azure/troubleshooting-azure)以获取更多信息。
 
-## Azure 设置
+### Azure 设置
 
-### 要从命令行界面登录 Azure，请运行以下命令
-
+#### 要从命令行界面登录 Azure，请运行以下命令
+```
 az login
 
 az account set \--subscription \<NAME OR ID OF SUBSCRIPTION>
-
-### 新集群的初始集群设置
+```
+#### 新集群的初始集群设置
 
 创建资源组：
-
+```
 az group create -n \<RESOURCE_GROUP_NAME> -l \<LOCATION>
-
+```
 示例变量：
 
 -   RESOURCE_GROUP_NAME=KubeTest
@@ -203,10 +203,10 @@ az group create -n \<RESOURCE_GROUP_NAME> -l \<LOCATION>
 -   LOCATION=westus
 
 创建一个专门定义的集群：
-
+```
 az aks create -g \<RESOURCE_GROUP_NAME> -n \<NAME> -s \<AGENT_SIZE> -c
-\<AGENT_COUNT> -l \<LOCATION> \--generate-ssh-keys
-
+<AGENT_COUNT> -l \<LOCATION> \--generate-ssh-keys
+```
 示例变量：
 
 -   NAME=KubeTestCluster
@@ -222,7 +222,7 @@ az aks create -g \<RESOURCE_GROUP_NAME> -n \<NAME> -s \<AGENT_SIZE> -c
 驱动程序](https://docs.microsoft.com/azure/aks/gpu-cluster#install-nvidia-drivers)，然后才能将
 GPU 与 Kubeflow 一起使用。
 
-## Kubeflow 安装
+#### Kubeflow 安装
 
 **重要提示**：要使用多用户身份验证和命名空间分离在 Azure 上部署
 Kubeflow，请使用[Azure 中使用
@@ -236,83 +236,59 @@ kfctl。WSL的设置请参考官方[说明](https://docs.microsoft.com/en-us/win
 运行以下命令来设置和部署 Kubeflow。
 
 1.  创建用户凭据。您只需要运行此命令一次。
-
+```
 2.  az aks get-credentials -n \<NAME> -g \<RESOURCE_GROUP_NAME>
-
+```
 3.  从[Kubeflow
     版本页面](https://github.com/kubeflow/kfctl/releases/tag/v1.2.0)下载
     kfctl v1.2.0 版本 。
 
 4.  解压kfctl：
-
-5.  tar -xvf kfctl_v1.2.0\_\<platform>.tar.gz
-
-6.  运行以下命令来设置和部署
-    Kubeflow。下面的代码包含一个可选命令，用于将二进制 kfctl
+```
+  tar -xvf kfctl_v1.2.0\_\<platform>.tar.gz
+```
+5.  运行以下命令来设置和部署Kubeflow。下面的代码包含一个可选命令，用于将二进制 kfctl
     添加到您的路径中。如果不将二进制文件添加到路径中，则每次运行时都必须使用
     kfctl 二进制文件的完整路径。
 
-7.  \# The following command is optional. It adds the kfctl binary to
-    your path.
 
-8.  \# If you don\'t add kfctl to your path, you must use the full path
 
-9.  \# each time you run kfctl.
+6.  在目录名称中仅使用字母数字字符或 -
+```
+7.  export PATH=\$PATH:\"\<path-to-kfctl>\"
+```
+  
+1. 将 KF_NAME 设置为您的 Kubeflow 部署的名称。 
+```
+    export KF_NAME=\<your choice of name for the Kubeflow deployment>
+```
 
-10. \# Use only alphanumeric characters or - in the directory name.
+1.  设置要存储一个或多个的基本目录的路径
 
-11. export PATH=\$PATH:\"\<path-to-kfctl>\"
+2.  Kubeflow 部署。 例如，/opt/。 然后为此部署设置 Kubeflow 应用程序目录。
+```
+ export BASE_DIR=\<path to a base directory>
 
-12. 
+  export KF_DIR=\${BASE_DIR}/\${KF_NAME}
 
-13. \# Set KF_NAME to the name of your Kubeflow deployment. You also use
-    this
+```
 
-14. \# value as directory name when creating your configuration
-    directory.
 
-15. \# For example, your deployment name can be \'my-kubeflow\' or
-    \'kf-test\'.
+Set the configuration file to use when deploying Kubeflow.The following configuration installs Istio by default. Comment out the Istio components in the config file to skip Istio installation.See https://github.com/kubeflow/kubeflow/pull/3663
 
-16. export KF_NAME=\<your choice of name for the Kubeflow deployment>
-
-17. 
-
-18. \# Set the path to the base directory where you want to store one or
-    more
-
-19. \# Kubeflow deployments. For example, /opt/.
-
-20. \# Then set the Kubeflow application directory for this deployment.
-
-21. export BASE_DIR=\<path to a base directory>
-
-22. export KF_DIR=\${BASE_DIR}/\${KF_NAME}
-
-23. 
-
-24. \# Set the configuration file to use when deploying Kubeflow.
-
-25. \# The following configuration installs Istio by default. Comment
-    out
-
-26. \# the Istio components in the config file to skip Istio
-    installation.
-
-27. \# See https://github.com/kubeflow/kubeflow/pull/3663
-
-28. export
+```
+ export
     CONFIG_URI=\"https://raw.githubusercontent.com/kubeflow/manifests/v1.2-branch/kfdef/kfctl_k8s_istio.v1.2.0.yaml\"
+  
 
-29. 
+2.  mkdir -p \${KF_DIR}
 
-30. mkdir -p \${KF_DIR}
+3.  cd \${KF_DIR}
 
-31. cd \${KF_DIR}
+4.  kfctl apply -V -f \${CONFIG_URI}
 
-32. kfctl apply -V -f \${CONFIG_URI}
-
-33. -   **\${KF_NAME}** - 您的 Kubeflow
+```
+5.  -   **\${KF_NAME}** - 您的 Kubeflow
         部署的名称。如果您需要自定义部署名称，请在此处指定该名称。例如，my-kubeflow或kf-test。KF_NAME
         的值必须由小写字母数字字符或"-"组成，并且必须以字母数字字符开头和结尾。此变量的值不能超过
         25 个字符。它必须只包含一个名称，而不是目录路径。在创建存储
@@ -327,11 +303,13 @@ kfctl。WSL的设置请参考官方[说明](https://docs.microsoft.com/en-us/win
         applyor kfctl build（参见下一步）时，kfctl 会创建配置 YAML
         文件的本地版本，您可以在必要时进一步自定义。
 
-34. 运行此命令以检查资源是否已在命名空间中正确部署kubeflow：
+6.  运行此命令以检查资源是否已在命名空间中正确部署kubeflow：
 
-35. kubectl get all -n kubeflow
+```
+kubectl get all -n kubeflow
 
-36. 打开 Kubeflow 仪表板
+```
+8.  打开 Kubeflow 仪表板
 
 > 默认安装不会创建外部端点，但您可以使用端口转发来访问您的集群。运行以下命令：
 >
@@ -344,7 +322,7 @@ kfctl。WSL的设置请参考官方[说明](https://docs.microsoft.com/en-us/win
 > 部署的访问控制中](https://www.kubeflow.org/docs/azure/authentication)阅读有关
 > Azure 身份验证选项的更多信息。
 
-4.  **修改配置**
+###  **修改配置**
 
 > **由于AKS从1.19开始默使用containerd作为K8S集群认runtime（开始弃用
 > Docker
@@ -418,7 +396,7 @@ kubectl edit configmap workflow-controller-configmap -n kubeflow
 ```
 **containerRuntimeExecutor: pns**
 
-5.  **测试及演示**
+###  **测试及演示**
 
 
 1)  **在Kubeflow Dashboard上使用 Jupyter notebook运行机器学习训练**
@@ -456,52 +434,46 @@ kubectl edit configmap workflow-controller-configmap -n kubeflow
 >
 > **运行一段mnist数据集训练集代码，Copy如下源代码到Jupyter
 > notebook中，**
->
-> **#!/usr/bin/env python**
->
-> **\# coding: utf-8**
->
-> **\# In\[1\]:**
->
-> **from tensorflow.examples.tutorials.mnist import input_data**
->
-> **mnist = input_data.read_data_sets(\"MNIST_data/\", one_hot=True)**
->
-> **import tensorflow as tf**
->
-> **x = tf.placeholder(tf.float32, \[None, 784\])**
->
-> **W = tf.Variable(tf.zeros(\[784, 10\]))**
->
-> **b = tf.Variable(tf.zeros(\[10\]))**
->
-> **y = tf.nn.softmax(tf.matmul(x, W) + b)**
->
-> **y\_ = tf.placeholder(tf.float32, \[None, 10\])**
->
-> **cross_entropy = tf.reduce_mean(-tf.reduce_sum(y\_ \* tf.log(y),
-> reduction_indices=\[1\]))**
->
-> **train_step =
-> tf.train.GradientDescentOptimizer(0.05).minimize(cross_entropy)**
->
-> **sess = tf.InteractiveSession()**
->
-> **tf.global_variables_initializer().run()**
->
-> **for \_ in range(1000):**
->
-> **batch_xs, batch_ys = mnist.train.next_batch(100)**
->
-> **sess.run(train_step, feed_dict={x: batch_xs, y\_: batch_ys})**
->
-> **correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y\_,1))**
->
-> **accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))**
->
-> **print(\"Accuracy: \", sess.run(accuracy, feed_dict={x:
-> mnist.test.images, y\_: mnist.test.labels}))**
->
+```
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+from tensorflow.examples.tutorials.mnist import input_data
+mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
+
+import tensorflow as tf
+
+x = tf.placeholder(tf.float32, [None, 784])
+
+W = tf.Variable(tf.zeros([784, 10]))
+b = tf.Variable(tf.zeros([10]))
+
+y = tf.nn.softmax(tf.matmul(x, W) + b)
+
+y_ = tf.placeholder(tf.float32, [None, 10])
+cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y), reduction_indices=[1]))
+
+train_step = tf.train.GradientDescentOptimizer(0.05).minimize(cross_entropy)
+
+sess = tf.InteractiveSession()
+tf.global_variables_initializer().run()
+
+for _ in range(1000):
+  batch_xs, batch_ys = mnist.train.next_batch(100)
+  sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
+
+correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+print("Accuracy: ", sess.run(accuracy, feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
+
+
+
+```
+
+
 > **点击运行按钮，**
 >
 > ![图形用户界面, 文本, 应用程序
@@ -512,11 +484,9 @@ kubectl edit configmap workflow-controller-configmap -n kubeflow
 > ![图形用户界面, 文本, 应用程序
 > 描述已自动生成](media/image11.png)
 
--   **sdafsdaf**
 
--   **dsafsadf**
 
-2)  **运行Kubeflow Pipeline**
+1)  **运行Kubeflow Pipeline**
 
 -   **从Dashboard Home页面点击Pipelines**
 

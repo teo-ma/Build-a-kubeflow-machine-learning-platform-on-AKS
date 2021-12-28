@@ -352,7 +352,7 @@ kfctl。WSL的设置请参考官方[说明](https://docs.microsoft.com/en-us/win
 
 1)  默认安装不会创建外部端点，想从外部长期访问Kubeflow Cental
     Dashboard需要给它配置一个K8S **Service，**
-
+```
 // serviceforistio-ingressgateway.yaml
 
 apiVersion: v1
@@ -371,11 +371,13 @@ type: LoadBalancer
 
 ports:
 
-\- port: 80
+- port: 80
 
 selector:
 
 app: istio-ingressgateway
+
+```
 
 运行**kubectl apply -f** serviceforistio-ingressgateway.yaml
 
@@ -388,39 +390,37 @@ Dashboard
 2)  **MPI Operator 可以轻松地在 Kubernetes 上运行 allreduce
     风格的分布式训练。。默认安装kubeflow后发现MPI operator
     服务的Pod是失败的，解决方法是单独重新安装。**
+```
+git clone https://github.com/kubeflow/mpi-operator
 
-**git clone https://github.com/kubeflow/mpi-operator**
+cd mpi-operator
 
-**cd mpi-operator**
+kubectl apply -f deploy/v2beta1/mpi-operator.yaml
 
-**kubectl apply -f deploy/v2beta1/mpi-operator.yaml**
-
-**kubectl apply -k manifests/overlays/Kubeflow**
-
+kubectl apply -k manifests/overlays/Kubeflow
+```
 3)  **解决Kubeflow Dashboard无法显示Pipeline 功能tab**
-
-> **kubectl edit destinationrule -n kubeflow ml-pipeline**
->
-> **将 tls.mode（最后一行）从 ISTIO_MUTUAL 修改为 DISABLE**
->
-> **kubectl edit destinationrule -n kubeflow ml-pipeline-ui**
->
-> **将 tls.mode（最后一行）从 ISTIO_MUTUAL 修改为 DISABLE**
+```
+kubectl edit destinationrule -n kubeflow ml-pipeline**
+```
+**将 tls.mode（最后一行）从 ISTIO_MUTUAL 修改为 DISABLE**
+```
+kubectl edit destinationrule -n kubeflow ml-pipeline-ui
+```
+**将 tls.mode（最后一行）从 ISTIO_MUTUAL 修改为 DISABLE**
 
 4)  **解决无法运行Kubeflow Pipeline问题**
 
-> **由于AKS1.19之后版本将容器
-> Runtime从Docker换成了containerd，从而带来Kubeflow兼容问题，按如下方法修改workflow-controller-configmap的配置：**
-
-**kubectl edit configmap workflow-controller-configmap -n kubeflow**
-
-> **containerRuntimeExecutor: pns**
+ **由于AKS1.19之后版本将容器
+Runtime从Docker换成了containerd，从而带来Kubeflow兼容问题，按如下方法修改workflow-controller-configmap的配置：**
+```
+kubectl edit configmap workflow-controller-configmap -n kubeflow
+```
+**containerRuntimeExecutor: pns**
 
 5.  **测试及演示**
 
-```{=html}
-<!-- -->
-```
+
 1)  **在Kubeflow Dashboard上使用 Jupyter notebook运行机器学习训练**
 
 -   **登陆Kubeflow Cental Dashboard**

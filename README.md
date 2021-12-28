@@ -75,8 +75,7 @@ Learning领域的数据科学家及工程师期待并尝试专研借助Kubernete
 下图显示了 Kubeflow 作为在 Kubernetes 之上安排 ML 系统组件的平台：
 
 ![蓝色屏幕的截图
-描述已自动生成](media/kubeflow-overview-platform-diagram (1).svg){width="5.768055555555556in"
-height="3.5868055555555554in"}
+描述已自动生成](media/kubeflow-overview-platform-diagram.svg)
 
 Kubeflow在[Kubernetes](https://kubernetes.io/)的基础上作为部署，缩放和管理复杂系统的ML系统。
 
@@ -92,8 +91,7 @@ ML
 为简单起见，下图按顺序显示了工作流阶段。工作流末尾的箭头指向流程以指示流程的迭代性质：
 
 ![图示, 文本
-描述已自动生成](media/kubeflow-overview-workflow-diagram-1.svg){width="5.760617891513561in"
-height="3.2992125984251968in"}
+描述已自动生成](media/kubeflow-overview-workflow-diagram-1.svg)
 
 更详细地查看各个阶段：
 

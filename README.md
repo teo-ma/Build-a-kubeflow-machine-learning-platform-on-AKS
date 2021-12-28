@@ -383,8 +383,7 @@ app: istio-ingressgateway
 Dashboard
 
 ![图形用户界面, 应用程序
-描述已自动生成](media/image3.png){width="5.768055555555556in"
-height="4.044444444444444in"}
+描述已自动生成](media/image3.png)
 
 2)  **MPI Operator 可以轻松地在 Kubernetes 上运行 allreduce
     风格的分布式训练。。默认安装kubeflow后发现MPI operator
@@ -427,40 +426,33 @@ height="4.044444444444444in"}
 -   **登陆Kubeflow Cental Dashboard**
 
 > ![图形用户界面, 文本, 应用程序
-> 描述已自动生成](media/image4.png){width="5.768055555555556in"
-> height="5.852083333333334in"}
+> 描述已自动生成](media/image4.png)
 
 -   **选择Notebook Server**
 
 > ![电脑屏幕截图
-> 描述已自动生成](media/image5.png){width="5.768055555555556in"
-> height="5.721527777777778in"}
+> 描述已自动生成](media/image5.png)
 
 -   **创建一个Notebook Server**
 
 > ![图形用户界面, 文本, 应用程序, 电子邮件
-> 描述已自动生成](media/image6.png){width="5.768055555555556in"
-> height="3.8041666666666667in"}
+> 描述已自动生成](media/image6.png)
 
 -   **AKS默认支持tensorflow
     1.15.2的CPU和GPU镜像，但允许使用客户化镜像，需要数据工程师或数据科学家自己准备镜像进行加载。我们例子里演示使用tensorflow
     1.15.2的CPU或GPU镜像。**
 
 > ![图形用户界面, 文本, 应用程序, 电子邮件
-> 描述已自动生成](media/image7.png){width="5.768055555555556in"
-> height="5.653472222222222in"}
+> 描述已自动生成](media/image7.png)
 
 -   **连接Notebook Servers**
 
 > ![图形用户界面, 文本, 电子邮件
-> 描述已自动生成](media/image8.png){width="5.768055555555556in"
-> height="4.1618055555555555in"}
->
+> 描述已自动生成](media/image8.png)
 > **将默认的http://20.121.225.36/notebook/anonymous/cpuserver1/tree?换成http://20.121.225.36/notebook/anonymous/cpuserver1/lab?，然后点击Python3图标，**
 >
 > ![图形用户界面
-> 描述已自动生成](media/image9.png){width="5.768055555555556in"
-> height="5.235416666666667in"}
+> 描述已自动生成](media/image9.png)
 >
 > **运行一段mnist数据集训练集代码，Copy如下源代码到Jupyter
 > notebook中，**
@@ -513,14 +505,12 @@ height="4.044444444444444in"}
 > **点击运行按钮，**
 >
 > ![图形用户界面, 文本, 应用程序
-> 描述已自动生成](media/image10.png){width="5.768055555555556in"
-> height="5.429861111111111in"}
+> 描述已自动生成](media/image10.png)
 
 -   **从运行结果可以看到准确率（中间会报出一些Warning，可以忽略）**
 
 > ![图形用户界面, 文本, 应用程序
-> 描述已自动生成](media/image11.png){width="5.768055555555556in"
-> height="5.833333333333333in"}
+> 描述已自动生成](media/image11.png)
 
 -   **sdafsdaf**
 
@@ -531,45 +521,38 @@ height="4.044444444444444in"}
 -   **从Dashboard Home页面点击Pipelines**
 
 > ![图形用户界面, 文本, 应用程序, 电子邮件
-> 描述已自动生成](media/image12.png){width="5.768055555555556in"
-> height="5.34375in"}
+> 描述已自动生成](media/image12.png)
 
 -   **默认提供了5个pipeline用于例子体验，我们选择**\[Tutorial\] Data
     passing in python components 打开
 
-![文本 描述已自动生成](media/image13.png){width="5.768055555555556in"
-height="2.426388888888889in"}
+![文本 描述已自动生成](media/image13.png)
 
 -   **从打开的pipeline点击 Create
     experiment，创建数据pipeline实验环境，**
 
 > ![图形用户界面, 应用程序
-> 描述已自动生成](media/image14.png){width="5.768055555555556in"
-> height="5.372916666666667in"}
+> 描述已自动生成](media/image14.png)
 
 -   **输入Experiment name，然后点击Next，**
 
 ![图形用户界面, 文本, 应用程序, 电子邮件
-描述已自动生成](media/image15.png){width="5.768055555555556in"
-height="5.020833333333333in"}
+描述已自动生成](media/image15.png)
 
 -   **进入Start a run界面，点击Start 按钮运行该Experiment**
 
 > ![电脑屏幕截图
-> 描述已自动生成](media/image16.png){width="5.768055555555556in"
-> height="5.944444444444445in"}
+> 描述已自动生成](media/image16.png)
 
 -   **可以看到这个Experiment的运行记录，点击可以查看详细信息，**
 
 > ![电脑萤幕的截图
-> 描述已自动生成](media/image17.png){width="5.768055555555556in"
-> height="4.822222222222222in"}
+> 描述已自动生成](media/image17.png)
 
 -   **以图形的方式直观的显示运行状态或结果，**
 
 > ![图形用户界面
-> 描述已自动生成](media/image18.png){width="5.768055555555556in"
-> height="4.4944444444444445in"}
+> 描述已自动生成](media/image18.png)
 
 6.  **结尾**
 

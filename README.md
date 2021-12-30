@@ -1,10 +1,8 @@
-## 在AKS上构建Kubeflow Machine Learning 平台
+## 在Azure Kubernetes Service上构建Kubeflow Machine Learning 平台
 
-###  **Kubeflow背景**
+本文内容主要指引机器学习的工程师及专家们如何在Azure Kubernetes Service（AKS）上搭建Kubeflow。
 
-"Kubernetes 可以通过容器编排pipeline来应对许多计算挑战。它可以成为
-IT的单一平台，以可扩展且安全的方式提供统一的部署软件方式。从它诞生后，Machine
-Learning领域的数据科学家及工程师期待并尝试专研借助Kubernetes来搭建机器学习平台，从而带来以下几个优势：
+Kubernetes可以通过容器编排pipeline来应对许多计算挑战。从它诞生后，MachineLearning领域的数据科学家及工程师期待并尝试借助Kubernetes来搭建机器学习平台，从而为ML实践带来以下几个优势：
 
 -   计算资源可扩展性
 
@@ -16,25 +14,28 @@ Learning领域的数据科学家及工程师期待并尝试专研借助Kubernete
 
 -   基础设施抽象
 
-> 直到Kubeflow的出现，在Kubernetes上部署机器学习平台带来了质的飞跃，Kubeflow
-> 一开始是谷歌内部运行 TensorFlow 方式的开源，基于名为 TensorFlow
-> Extended 的管道。 它最初只是一种在 Kubernetes 上运行 TensorFlow
-> 作业的更简单方法，但后来扩展为一个多架构、多云框架，用于运行端到端机器学习工作流。
->
-> 什么是Kubeflow？
->
-> [Kubeflow](https://www.kubeflow.org/) 是 Kubernetes 的机器学习工具包。
->
-> 要使用 Kubeflow，基本工作流程是：
->
-> 下载并运行 Kubeflow 部署二进制文件。
->
-> 自定义生成的配置文件。
->
-> 运行指定的脚本以将您的容器部署到您的特定环境。
->
-> 您可以调整配置以选择要用于 ML 工作流每个阶段的平台和服务：
->
+ 直到Kubeflow的出现，在Kubernetes上部署机器学习平台带来了质的飞跃。
+ 
+
+###  **Kubeflow背景**
+
+ 什么是Kubeflow？
+ 一开始是谷歌内部运行 TensorFlow 方式的开源，基于名为 TensorFlow
+ Extended 的管道。 它最初只是一种在 Kubernetes 上运行 TensorFlow
+ 作业的更简单方法，但后来扩展为一个多架构、多云框架，用于运行端到端机器学习工作流。
+
+ [Kubeflow](https://www.kubeflow.org/) 是 Kubernetes 的机器学习工具包。
+
+ 要使用 Kubeflow，基本工作流程是：
+
+ 下载并运行 Kubeflow 部署二进制文件。
+
+ 自定义生成的配置文件。
+
+ 运行指定的脚本以将您的容器部署到您的特定环境。
+
+ 您可以调整配置以选择要用于 ML 工作流每个阶段的平台和服务：
+
 -    数据准备
 
 -    模型训练，
@@ -68,7 +69,7 @@ Kubernetes，都应该能够运行 Kubeflow。Kubeflow的目标是通过让 Kube
 
 Kubeflow在[Kubernetes](https://kubernetes.io/)的基础上作为部署，缩放和管理复杂系统的ML系统。
 
-使用 Kubeflow配置界面（见[下文](https://www.kubeflow.org/docs/started/architecture/#interfaces)），您可以指定工作流所需的ML工具。然后，您可以将工作流部署到各种云、本地和本地平台，以进行实验和生产使用。
+使用 （[Kubeflow配置界面](https://www.kubeflow.org/docs/started/architecture/#interfaces)），您可以指定工作流所需的ML工具。然后，您可以将工作流部署到各种云、本地和本地平台，以进行实验和生产使用。
 
 当您开发和部署 ML 系统时，ML 工作流通常由几个阶段组成。开发 ML系统是一个迭代过程。您需要评估 ML工作流各个阶段的输出，并在必要时对模型和参数应用更改，以确保模型不断产生您需要的结果。
 

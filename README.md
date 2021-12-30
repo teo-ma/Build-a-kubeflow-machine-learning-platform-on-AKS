@@ -78,6 +78,8 @@ Kubeflow在[Kubernetes](https://kubernetes.io/)的基础上作为部署，缩放
 ![图示, 文本
 描述已自动生成](media/kubeflow-overview-workflow-diagram-1.svg)
 
+
+
 更详细地查看各个阶段：
 
 -   在实验阶段，您根据初始假设开发模型，并迭代地测试和更新模型以产生您正在寻找的结果：

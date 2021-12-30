@@ -1,0 +1,12 @@
+//1)	默认安装不会创建外部端点，想从外部长期访问Kubeflow Cental Dashboard需要给它配置一个K8S Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubeflowdashboard-lb
+  namespace: istio-system
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: istio-ingressgateway

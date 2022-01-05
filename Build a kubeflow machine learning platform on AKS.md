@@ -182,7 +182,7 @@ kfctl apply -V -f \${CONFIG_URI}
 kubectl get all -n kubeflow
 
 ```
-12.  打开 Kubeflow 仪表板
+12.  打开 Kubeflow 仪表板（Central Dashboard）
 
 > 默认安装不会创建外部端点，但您可以使用端口转发来访问您的集群。运行以下命令：
 >
@@ -265,9 +265,10 @@ kubectl edit destinationrule -n kubeflow ml-pipeline-ui
  **由于AKS1.19之后版本将容器
 Runtime从Docker换成了containerd，从而带来Kubeflow兼容问题，按如下方法修改workflow-controller-configmap的配置：**
 ```
-kubectl edit configmap workflow-controller-configmap -n kubeflow
+kubectl edit configmap workflow-controller-configmap -n Kubeflow
 ```
 **containerRuntimeExecutor: pns**
+注意：会有多处containerRuntimeExecutor的值需要修改，谨慎修改所有的部分。然后保存。
 
 ##  **测试及演示**
 
